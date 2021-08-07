@@ -15,7 +15,7 @@ const App = () => {
     }
 
     const fetchWeatherDataByCoords = (lat, lon) => {
-        const query = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
+        const query = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
         fetch(query)
             .then((res) => res.json())
             .then((data) => {
@@ -35,7 +35,7 @@ const App = () => {
     }
 
     const fetchWeaterData = (i) => {
-        const query = `http://api.openweathermap.org/data/2.5/weather?q=${i}&appid=${process.env.REACT_APP_API_KEY}`
+        const query = `https://api.openweathermap.org/data/2.5/weather?q=${i}&appid=${process.env.REACT_APP_API_KEY}`
         fetch(query)
             .then((res) => res.json())
             .then((data) => {
