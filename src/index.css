@@ -148,6 +148,8 @@ button:hover {
 .current-loc {
     font-size: 1.2em;
     color: rgb(165, 165, 165);
+    background: none;
+    box-shadow: none;
 }
 
 .current-loc:hover {

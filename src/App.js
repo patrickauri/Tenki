@@ -167,13 +167,13 @@ const App = () => {
                         Search
                     </button>
                 </form>
-                <p
+                <button
                     className='current-loc'
                     onClick={() => searchCurrentLocation()}
                     onTouchStart={() => searchCurrentLocation()}
                 >
                     Use current location
-                </p>
+                </button>
             </section>
             <section className='result'>
                 <Result />
