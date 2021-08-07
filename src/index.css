@@ -50,6 +50,17 @@ button {
     padding-left: 1em;
     padding-right: 1em;
     margin-left: 1em;
+    transition: 2s;
+}
+
+button.disabled {
+    background: rgb(165, 165, 165);
+    box-shadow: none;
+    transition: 2s;
+}
+
+button.disabled:hover {
+    cursor: inherit;
 }
 
 button,
@@ -57,6 +68,9 @@ button:hover,
 button:focus {
     outline: none;
     border: none;
+}
+button:hover {
+    cursor: pointer;
 }
 
 .input-section {
@@ -94,10 +108,20 @@ button:focus {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 800;
+    margin: 0.5em;
 }
 
 .w-wind {
+    color: rgba(144, 144, 144, 1);
+    font-weight: 800;
+}
+
+.w-wind-number,
+.w-rain-number {
+    font-size: 2em;
 }
 
 .w-rain {
+    color: rgba(144, 144, 144, 1);
+    font-weight: 800;
 }

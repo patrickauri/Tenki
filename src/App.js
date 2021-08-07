@@ -18,14 +18,13 @@ const App = () => {
         fetch(query)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
+                console.table(data)
                 setWeatherData(data)
                 fetch(
                     `https://restcountries.eu/rest/v2/alpha/${data.sys.country}`
                 )
                     .then((res) => res.json())
                     .then((data) => {
-                        console.log(data)
                         setCountryName(data.name)
                     })
                     .catch((e) => console.log(e))
@@ -51,8 +50,22 @@ const App = () => {
                                 )}
                                 °c
                             </p>
-                            <p className='w-wind'>Wind</p>
-                            <p className='w-rain'>Rain</p>
+                            <p className='w-wind'>
+                                <span className='w-wind-number'>
+                                    💨
+                                    {Math.round(weatherData.wind.speed)}{' '}
+                                </span>
+                                m/s
+                            </p>
+                            <p className='w-rain'>
+                                <span className='w-rain-number'>
+                                    ☂️
+                                    {weatherData.rain
+                                        ? weatherData.rain['1h']
+                                        : '0'}{' '}
+                                </span>
+                                mm
+                            </p>
                         </section>
                     )
                 case '400':
@@ -74,8 +87,14 @@ const App = () => {
                         onChange={(e) => setInput(e.target.value)}
                         type='text'
                         placeholder='Enter a location'
+                        autoFocus
                     ></input>
-                    <button>Search</button>
+                    <button
+                        className={input ? '' : 'disabled'}
+                        disabled={!input}
+                    >
+                        Search
+                    </button>
                 </form>
             </section>
             <section className='result'>
