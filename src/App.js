@@ -1,185 +1,193 @@
-import { useState } from 'react'
-import { kelvinToCelsius } from './Utilities'
+import { useState } from "react"
+import { kelvinToCelsius } from "./Utilities"
 
-require('dotenv').config()
+require("dotenv").config()
 
 const App = () => {
-    const [input, setInput] = useState()
-    const [weatherData, setWeatherData] = useState()
-    const [countryName, setCountryName] = useState()
+  const [input, setInput] = useState()
+  const [weatherData, setWeatherData] = useState()
+  const [countryName, setCountryName] = useState()
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        document.getElementById('inputField').blur()
-        fetchWeaterData(input)
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    document.getElementById("inputField").blur()
+    fetchWeaterData(input)
+  }
 
-    const fetchWeatherDataByCoords = (lat, lon) => {
-        const query = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
-        fetch(query)
+  const fetchWeatherDataByCoords = (lat, lon) => {
+    const query = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
+    fetch(query)
+      .then((res) => res.json())
+      .then((data) => {
+        setWeatherData(data)
+        if (data.sys) {
+          fetch(`https://restcountries.eu/rest/v2/alpha/${data.sys.country}`)
             .then((res) => res.json())
             .then((data) => {
-                setWeatherData(data)
-                if (data.sys) {
-                    fetch(
-                        `https://restcountries.eu/rest/v2/alpha/${data.sys.country}`
-                    )
-                        .then((res) => res.json())
-                        .then((data) => {
-                            setCountryName(data.name)
-                        })
-                        .catch((e) => console.log(e))
-                }
+              setCountryName(data.name)
             })
-            .catch()
-    }
+            .catch((e) => console.log(e))
+        }
+      })
+      .catch()
+  }
 
-    const fetchWeaterData = (i) => {
-        const query = `https://api.openweathermap.org/data/2.5/weather?q=${i}&appid=${process.env.REACT_APP_API_KEY}`
-        fetch(query)
+  const fetchWeaterData = (i) => {
+    const query = `https://api.openweathermap.org/data/2.5/weather?q=${i}&appid=${process.env.REACT_APP_API_KEY}`
+    fetch(query)
+      .then((res) => res.json())
+      .then((data) => {
+        setWeatherData(data)
+        if (data.sys) {
+          fetch(`https://restcountries.eu/rest/v2/alpha/${data.sys.country}`)
             .then((res) => res.json())
             .then((data) => {
-                setWeatherData(data)
-                if (data.sys) {
-                    fetch(
-                        `https://restcountries.eu/rest/v2/alpha/${data.sys.country}`
-                    )
-                        .then((res) => res.json())
-                        .then((data) => {
-                            setCountryName(data.name)
-                        })
-                        .catch((e) => console.log(e))
-                }
+              setCountryName(data.name)
             })
-            .catch()
-    }
+            .catch((e) => console.log(e))
+        }
+      })
+      .catch()
+  }
 
-    const RenderWeatherEmoji = () => {
-        if (weatherData.weather[0].id > 800) {
-            // Clouds
-            return '☁️'
-        }
-        if (weatherData.weather[0].id === 800) {
-            // Clear
-            return '☀️'
-        }
-        if (weatherData.weather[0].id > 700) {
-            // Atmosphere
-            return '🌪'
-        }
-        if (weatherData.weather[0].id > 600) {
-            // Snow
-            return '🌨'
-        }
-        if (weatherData.weather[0].id > 500) {
-            // Rain
-            return '🌧'
-        }
-        if (weatherData.weather[0].id > 300) {
-            // Drizzle
-            return '🌦'
-        }
-        if (weatherData.weather[0].id > 200) {
-            // Thunderstorm
-            return '⛈'
-        }
-        return ''
+  const RenderWeatherEmoji = () => {
+    if (weatherData.weather[0].id > 800) {
+      // Clouds
+      return "☁️"
     }
-
-    const Result = () => {
-        if (weatherData) {
-            switch (weatherData.cod) {
-                case 200:
-                    return (
-                        <section className='weather'>
-                            <h2 className='w-city'>{weatherData.name}</h2>
-                            <h3 className='w-country'>
-                                {countryName
-                                    ? countryName
-                                    : weatherData.sys.name}
-                            </h3>
-                            <p className='w-deg'>
-                                <RenderWeatherEmoji />
-                                <span className='w-deg-number'>
-                                    {Math.round(
-                                        kelvinToCelsius(weatherData.main.temp)
-                                    )}
-                                    °c
-                                </span>
-                            </p>
-                            <p className='w-wind'>
-                                <span className='w-wind-number'>
-                                    💨
-                                    {Math.round(weatherData.wind.speed)}{' '}
-                                </span>
-                                m/s
-                            </p>
-                            <p className='w-rain'>
-                                <span className='w-rain-number'>
-                                    ☂️
-                                    {weatherData.rain
-                                        ? weatherData.rain['1h']
-                                        : '0'}{' '}
-                                </span>
-                                mm
-                            </p>
-                        </section>
-                    )
-                case '400':
-                    return `You weren't supposed to do that 👀`
-                case '404':
-                    return (
-                        <p className='error'>
-                            Couldn't find that location. Please try somewhere
-                            else 🤔
-                        </p>
-                    )
-                default:
-                    return 'empty'
-            }
-        } else return ''
+    if (weatherData.weather[0].id === 800) {
+      // Clear
+      return "☀️"
     }
-
-    const searchCurrentLocation = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((p) => {
-                fetchWeatherDataByCoords(p.coords.latitude, p.coords.longitude)
-            })
-        }
+    if (weatherData.weather[0].id > 700) {
+      // Atmosphere
+      return "🌪"
     }
+    if (weatherData.weather[0].id > 600) {
+      // Snow
+      return "🌨"
+    }
+    if (weatherData.weather[0].id > 500) {
+      // Rain
+      return "🌧"
+    }
+    if (weatherData.weather[0].id > 300) {
+      // Drizzle
+      return "🌦"
+    }
+    if (weatherData.weather[0].id > 200) {
+      // Thunderstorm
+      return "⛈"
+    }
+    return ""
+  }
 
-    return (
-        <main className='wrapper'>
-            <h1>Tenki</h1>
-            <section className='input-section'>
-                <form onSubmit={(e) => handleSubmit(e)}>
-                    <input
-                        id='inputField'
-                        onChange={(e) => setInput(e.target.value)}
-                        type='text'
-                        placeholder='Enter a location'
-                        autoFocus
-                    ></input>
-                    <button
-                        className={input ? '' : 'disabled'}
-                        disabled={!input}
-                    >
-                        Search
-                    </button>
-                </form>
-                <button
-                    className='current-loc'
-                    onClick={() => searchCurrentLocation()}
-                    onTouchStart={() => searchCurrentLocation()}
-                >
-                    Use current location
-                </button>
+  const Result = () => {
+    if (weatherData) {
+      switch (weatherData.cod) {
+        case 200:
+          return (
+            <section className="weather">
+              <h2 className="w-city">{weatherData.name}</h2>
+              <h3 className="w-country">
+                {countryName ? countryName : weatherData.sys.name}
+              </h3>
+              <p className="w-deg">
+                <RenderWeatherEmoji />
+                <span className="w-deg-number">
+                  {Math.round(kelvinToCelsius(weatherData.main.temp))}
+                  °c
+                </span>
+              </p>
+              <p className="w-wind">
+                <span className="w-wind-number">
+                  💨
+                  {Math.round(weatherData.wind.speed)}{" "}
+                </span>
+                m/s
+              </p>
+              <p className="w-rain">
+                <span className="w-rain-number">
+                  ☂️
+                  {weatherData.rain ? weatherData.rain["1h"] : "0"}{" "}
+                </span>
+                mm
+              </p>
             </section>
-            <section className='result'>
-                <Result />
-            </section>
-        </main>
-    )
+          )
+        case "400":
+          return `You weren't supposed to do that 👀`
+        case "404":
+          return (
+            <p className="error">
+              Couldn't find that location. Please try somewhere else 🤔
+            </p>
+          )
+        default:
+          return "empty"
+      }
+    } else return ""
+  }
+
+  const searchCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((p) => {
+        fetchWeatherDataByCoords(p.coords.latitude, p.coords.longitude)
+      })
+    }
+  }
+
+  return (
+    <main className="wrapper">
+      <h1>Tenki</h1>
+      <section className="input-section">
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <input
+            id="inputField"
+            onChange={(e) => setInput(e.target.value)}
+            type="text"
+            placeholder="Enter a location"
+            autoFocus
+          ></input>
+          <button className={input ? "" : "disabled"} disabled={!input}>
+            Search
+          </button>
+        </form>
+        <button
+          className="current-loc"
+          onClick={() => searchCurrentLocation()}
+          onTouchStart={() => searchCurrentLocation()}
+        >
+          Use current location
+        </button>
+      </section>
+      <section className="result">
+        <Result />
+      </section>
+      <section style={{ textAlign: "center" }}>
+        <a href="https://patrickauri.com" target="_blank" rel="noreferrer">
+          <p className="text-secondary" style={{ marginBottom: "1em" }}>
+            Created by Patrick Auri
+          </p>
+        </a>
+        <a
+          className="github-button"
+          href="https://github.com/patrickauri"
+          aria-label="Follow @patrickauri on GitHub"
+        >
+          Follow @patrickauri
+        </a>
+        <a
+          className="github-button"
+          href="https://github.com/patrickauri/japanesepitchaccent"
+          data-icon="octicon-star"
+          aria-label="Star patrickauri/japanesepitchaccent on GitHub"
+        >
+          Star
+        </a>
+      </section>
+    </main>
+  )
 }
 
 export default App
