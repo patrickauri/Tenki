@@ -88,12 +88,12 @@ button:hover {
 .result {
   margin-top: 4em;
   text-align: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .weather {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100vw;
   background: rgba(255, 255, 255, 0.5);
   box-shadow: 4px 4px 20px 4px rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(20px);
@@ -140,6 +140,14 @@ button:hover {
 
 .error {
   font-size: 1.5em;
+}
+
+a,
+a:hover,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: inherit;
 }
 
 .current-loc {

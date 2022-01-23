@@ -166,7 +166,7 @@ const App = () => {
       </section>
       <section style={{ textAlign: "center" }}>
         <a href="https://patrickauri.com" target="_blank" rel="noreferrer">
-          <p className="text-secondary" style={{ marginBottom: "1em" }}>
+          <p className="current-loc" style={{ marginBottom: "1em" }}>
             Created by Patrick Auri
           </p>
         </a>
@@ -179,9 +179,9 @@ const App = () => {
         </a>
         <a
           className="github-button"
-          href="https://github.com/patrickauri/japanesepitchaccent"
+          href="https://github.com/patrickauri/tenki-web"
           data-icon="octicon-star"
-          aria-label="Star patrickauri/japanesepitchaccent on GitHub"
+          aria-label="Star patrickauri/tenki-web on GitHub"
         >
           Star
         </a>
