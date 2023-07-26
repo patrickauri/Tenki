@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/tenki/static/css/main.b00ee549.chunk.css",
+    "main.js": "/tenki/static/js/main.9e6aceca.chunk.js",
+    "main.js.map": "/tenki/static/js/main.9e6aceca.chunk.js.map",
+    "runtime-main.js": "/tenki/static/js/runtime-main.90fc6039.js",
+    "runtime-main.js.map": "/tenki/static/js/runtime-main.90fc6039.js.map",
+    "static/js/2.c3a97534.chunk.js": "/tenki/static/js/2.c3a97534.chunk.js",
+    "static/js/2.c3a97534.chunk.js.map": "/tenki/static/js/2.c3a97534.chunk.js.map",
+    "static/js/3.e7aa125e.chunk.js": "/tenki/static/js/3.e7aa125e.chunk.js",
+    "static/js/3.e7aa125e.chunk.js.map": "/tenki/static/js/3.e7aa125e.chunk.js.map",
+    "index.html": "/tenki/index.html",
+    "static/css/main.b00ee549.chunk.css.map": "/tenki/static/css/main.b00ee549.chunk.css.map",
+    "static/js/2.c3a97534.chunk.js.LICENSE.txt": "/tenki/static/js/2.c3a97534.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.90fc6039.js",
+    "static/js/2.c3a97534.chunk.js",
+    "static/css/main.b00ee549.chunk.css",
+    "static/js/main.9e6aceca.chunk.js"
+  ]
+}
